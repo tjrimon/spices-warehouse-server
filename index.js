@@ -49,10 +49,11 @@ async function run() {
 
         // add inventory
         app.post('/add', async (req, res) => {
-            const newInventory = req.body;
-            const result = await inventoryCollection.insertOne(newInventory);
-            res.send(result);
+            const data = req.body;
+            const result = await inventoryCollection.insertOne(data);
+            res.send(result)
         });
+
 
         // delete inventory
         app.delete('/inventory/:id', async (req, res) => {
