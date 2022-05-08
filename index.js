@@ -32,7 +32,7 @@ async function run() {
             res.send(inventory);
         });
 
-        app.update('/inventory/:id', async (req, res) => {
+        app.put('/inventory/:id', async (req, res) => {
             const id = req.params.id
             const data = req.body
             const filter = { _id: ObjectId(id) }
@@ -40,10 +40,10 @@ async function run() {
             // create a document that sets the plot of the movie
             const updateDoc = {
                 $set: {
-                    data
+                    ...data
                 },
             };
-            const result = await notesCollection.updateOne(filter, updateDoc, options);
+            const result = await inventoryCollection.updateOne(filter, updateDoc, options);
             res.send(result)
         })
 
