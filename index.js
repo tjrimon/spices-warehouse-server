@@ -27,11 +27,25 @@ async function run() {
         // single inventory api
         app.get('/inventory/:id', async (req, res) => {
             const id = req.params.id;
-            console.log(id);
             const query = { _id: ObjectId(id) };
             const inventory = await inventoryCollection.findOne(query);
             res.send(inventory);
         });
+
+        app.update('/inventory/:id', async (req, res) => {
+            const id = req.params.id
+            const data = req.body
+            const filter = { _id: ObjectId(id) }
+            const options = { upsert: true };
+            // create a document that sets the plot of the movie
+            const updateDoc = {
+                $set: {
+                    data
+                },
+            };
+            const result = await notesCollection.updateOne(filter, updateDoc, options);
+            res.send(result)
+        })
 
         // add inventory
         app.post('/add', async (req, res) => {
